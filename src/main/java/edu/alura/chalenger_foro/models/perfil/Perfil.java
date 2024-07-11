@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Perfil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +27,15 @@ public class Perfil {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     private boolean activo;
+
+    public Perfil(DatosPerfil perfil){
+        this.nombre = perfil.nombre();
+        this.usuario = new Usuario(perfil.usuario());
+        this.activo = true;
+    }
+
+    public void desativar(){
+        this.activo = false;
+    }
 
 }

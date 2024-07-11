@@ -5,13 +5,13 @@ import java.util.List;
 
 import edu.alura.chalenger_foro.models.curso.DatosCurso;
 import edu.alura.chalenger_foro.models.respuesta.DatosRespuesta;
-import edu.alura.chalenger_foro.models.usuario.Usuario;
+import edu.alura.chalenger_foro.models.usuario.DatosUsuario;
 
 public record DatosTopico(
         String titulo,
         String mensaje,
         LocalDateTime fecha,
-        Usuario autor,
+        DatosUsuario autor,
         DatosCurso curso,
         List<DatosRespuesta> respuestas) {
 

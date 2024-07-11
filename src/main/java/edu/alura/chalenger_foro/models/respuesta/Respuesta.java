@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Respuesta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +34,18 @@ public class Respuesta {
     private Usuario autor;
     private String solucion;
     private boolean activo;
+
+    public Respuesta(DatosRespuesta respuesta){
+        this.mensaje = respuesta.mensaje();
+        this.topico = new Topico(respuesta.topico());
+        this.fecha = respuesta.fecha();
+        this.autor = new Usuario(respuesta.autor());
+        this.solucion = respuesta.solucion();
+        this.activo = true;
+    }
+
+    public void desativar(){
+        this.activo = false;
+    }
 
 }
