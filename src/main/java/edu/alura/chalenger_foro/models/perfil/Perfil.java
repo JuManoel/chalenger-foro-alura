@@ -34,6 +34,12 @@ public class Perfil {
         this.activo = true;
     }
 
+    public void actualizarPerfil(DatosActualizarPerfil perfil){
+        if(perfil.nombre()!=null){
+            this.nombre = perfil.nombre();
+        }
+    }
+
     public void desativar(){
         this.activo = false;
     }

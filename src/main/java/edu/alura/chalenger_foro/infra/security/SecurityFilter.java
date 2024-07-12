@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import edu.alura.chalenger_foro.service.ServiceToken;
 import edu.alura.chalenger_foro.repository.UsuarioRepository;
-
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
@@ -35,9 +34,11 @@ public class SecurityFilter extends OncePerRequestFilter {
             var nombreUsuario = tokenService.getSubject(token); // extract username
             if (nombreUsuario != null) {
                 // Token valido
-                var usuario = repository.findByLogin(nombreUsuario);
-                var authentication = new UsernamePasswordAuthenticationToken(usuario, null,
-                        usuario.getAuthorities()); // Forzamos un inicio de sesion
+                var usuario = repository.findByEmail(nombreUsuario);
+                if (!usuario.isPresent())
+                    throw new IllegalStateException("Usuario no existe");
+                var authentication = new UsernamePasswordAuthenticationToken(usuario.get(), null,
+                        usuario.get().getAuthorities()); // Forzamos un inicio de sesion
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

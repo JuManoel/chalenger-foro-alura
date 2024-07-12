@@ -56,6 +56,18 @@ public class Topico {
         this.status = true;
     }
 
+    public void actualizarTopico(DatosActualizarTopico topico){
+        if(topico.curso()!=null){
+            this.curso.ActualizarCurso(topico.curso());
+        }
+        if(topico.mensaje()!=null){
+            this.mensaje = topico.mensaje();
+        }
+        if(topico.titulo()!=null){
+            this.titulo = topico.titulo();
+        }
+    }
+
     public void desativar(){
         this.status = false;
     }

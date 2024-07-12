@@ -1,7 +1,13 @@
 package edu.alura.chalenger_foro.models.usuario;
 
-public record DatosUsuario(String nombre,
-        String email,
-        String contrasena) {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public record DatosUsuario(
+        @NotBlank @NotNull String nombre,
+        @NotBlank @NotNull @Email String email,
+        @NotBlank @NotNull @Size(min = 5) String contrasena) {
 
 }

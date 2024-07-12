@@ -31,6 +31,16 @@ public class Curso {
         this.activo = true;
     }
 
+    public void ActualizarCurso(DatosActualizarCurso curso){
+        if(curso.nombre()!=null){
+            this.nombre = curso.nombre();
+        }
+        if(curso.categoria()!=null){
+            this.categoria  = curso.categoria();
+        }
+
+    }
+
     public void desativar(){
         this.activo = false;
     }

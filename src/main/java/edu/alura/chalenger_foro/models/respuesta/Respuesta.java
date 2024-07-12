@@ -44,6 +44,15 @@ public class Respuesta {
         this.activo = true;
     }
 
+    public void actualizarRespuesta(DatosActualizarRespuesta respuesta){
+        if(respuesta.mensaje()!=null){
+            this.mensaje = respuesta.mensaje();
+        }
+        if(respuesta.solucion()!=null){
+            this.solucion = respuesta.solucion();
+        }
+    }
+
     public void desativar(){
         this.activo = false;
     }

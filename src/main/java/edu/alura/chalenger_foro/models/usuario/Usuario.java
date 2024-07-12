@@ -37,6 +37,15 @@ public class Usuario implements UserDetails{
         this.activo = true;
     }
 
+    public void actualizarUsuario(DatosActualizarUsuario usuario){
+        if(usuario.nombre()!=null){
+            this.nombre = usuario.nombre();
+        }
+        if(usuario.contrasena()!=null){
+            this.contrasena = usuario.contrasena();
+        }
+    }
+
     public void desativar(){
         this.activo = false;
     }

@@ -1,6 +1,10 @@
 package edu.alura.chalenger_foro.models.curso;
 
-public record DatosCurso(String nombre,
-        Categoria categoria) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record DatosCurso(
+        @NotBlank @NotNull String nombre,
+        @NotNull Categoria categoria) {
 
 }
