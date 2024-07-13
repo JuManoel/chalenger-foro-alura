@@ -31,11 +31,11 @@ public class SecurityFilter extends OncePerRequestFilter {
         var authHeader = request.getHeader("Authorization");
         if (authHeader != null) {
             var token = authHeader.replace("Bearer ", "");
-            var nombreUsuario = tokenService.getSubject(token); // extract username
-            if (nombreUsuario != null) {
+            var email = tokenService.getSubject(token); // extract username
+            if (email != null) {
                 // Token valido
-                var usuario = repository.findByEmail(nombreUsuario);
-                if (!usuario.isPresent())
+                var usuario = repository.cojerUsuarioPorEmail(email);
+                if (usuario.isPresent())
                     throw new IllegalStateException("Usuario no existe");
                 var authentication = new UsernamePasswordAuthenticationToken(usuario.get(), null,
                         usuario.get().getAuthorities()); // Forzamos un inicio de sesion

@@ -28,7 +28,20 @@ public class SecurityConfigurations {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Le indiamos a Spring el tipo de sesion
                 .and().authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .requestMatchers("/swagger-ui.html","/v3/api-docs/**","/swagger-ui/**").permitAll()
+                .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+
+                .requestMatchers(HttpMethod.PUT, "/curso", "/respuesta", "/topico", "/curso/**", "/respuesta/**",
+                        "/topico/**").hasAnyAuthority("ROLE_ADMIN")
+
+                .requestMatchers(HttpMethod.DELETE, "/curso", "/respuesta", "/topico", "/curso/**", "/respuesta/**",
+                        "/topico/**").hasAnyAuthority("ROLE_ADMIN")
+
+                .requestMatchers(HttpMethod.POST, "/curso", "/topico", "/curso/**", "/topico/**")
+                .hasAnyAuthority("ROLE_INSTRUCTOR", "ROLE_ADMIN")
+
+                .requestMatchers(HttpMethod.DELETE, "/respuesta", "/respuesta/**")
+                .hasAnyAuthority("ROLE_INSTRUCTOR","ROLE_MODERATOR")
+
                 .anyRequest()
                 .authenticated()
                 .and()

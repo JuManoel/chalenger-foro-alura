@@ -6,7 +6,6 @@ import java.util.List;
 import edu.alura.chalenger_foro.models.topico.Topico;
 
 public record DatosDTOTopico(
-        long id,
         String titulo,
         String mensaje,
         LocalDateTime fecha,
@@ -14,7 +13,7 @@ public record DatosDTOTopico(
         DatosDTOCurso curso,
         List<DatosDTORespuesta> respuestas) {
     public DatosDTOTopico(Topico t) {
-        this(t.getId(),t.getTitulo(), t.getMensaje(), t.getFecha(), new DatosDTOUsuario(t.getAutor()),
+        this(t.getTitulo(), t.getMensaje(), t.getFecha(), new DatosDTOUsuario(t.getAutor()),
                 new DatosDTOCurso(t.getCurso()),
                 t.getRespuestas().stream().map(r -> new DatosDTORespuesta(r)).toList());
     }

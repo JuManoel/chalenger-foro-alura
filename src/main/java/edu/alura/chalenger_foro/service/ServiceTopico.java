@@ -23,22 +23,32 @@ public class ServiceTopico {
         return datos.map(d -> new DatosDTOTopico(d));
     }
 
-    public DatosDTOTopico registrarTopico(@Valid DatosTopico datoTopico) {
+    public Topico registrarTopico(@Valid DatosTopico datoTopico) {
         var topico = new Topico(datoTopico);
-        var topicoDto = new DatosDTOTopico(topico);
         repository.save(topico);
-        return topicoDto;
+        return topico;
     }
 
     public DatosDTOTopico getTopicoById(Long id) {
-        var topico = repository.findById(id);
-        if(!topico.isPresent())
-            throw new IllegalStateException("No existe esse topico");
-        return new DatosDTOTopico(topico.get());
+        var topico = existe(id);
+        return new DatosDTOTopico(topico);
     }
 
-    public Object updateTopico(Long id, DatosActualizarTopico datosTopico) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateTopico'");
+    public DatosDTOTopico updateTopico(Long id, DatosActualizarTopico datosTopico) {
+        var topico = existe(id);
+        topico.actualizarTopico(datosTopico);
+        return new DatosDTOTopico(topico);
+    }
+
+    public void deletarTopico(Long id) {
+       var topico = existe(id);
+       topico.desativar();
+    }
+
+    private Topico existe(Long id){
+        var topico = repository.findByIdAndStatusTrue(id);
+        if(!topico.isPresent())
+            throw new IllegalStateException("No existe esse topico");
+        return topico.get();
     }
 }

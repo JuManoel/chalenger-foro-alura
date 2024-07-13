@@ -21,38 +21,52 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario implements UserDetails{
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
     private String email;
     private String contrasena;
+    private Perfil perfil;
     private boolean activo;
 
-    public Usuario(DatosUsuario usuario){
+    public Usuario(DatosUsuario usuario) {
         this.nombre = usuario.nombre();
         this.email = usuario.email();
+        this.perfil = usuario.perfil();
         this.contrasena = usuario.contrasena();
         this.activo = true;
     }
 
-    public void actualizarUsuario(DatosActualizarUsuario usuario){
-        if(usuario.nombre()!=null){
+    public void actualizarUsuario(DatosActualizarUsuario usuario) {
+        if (usuario.nombre() != null) {
             this.nombre = usuario.nombre();
         }
-        if(usuario.contrasena()!=null){
+        if (usuario.contrasena() != null) {
             this.contrasena = usuario.contrasena();
         }
     }
 
-    public void desativar(){
+    public void desativar() {
         this.activo = false;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        switch (this.perfil) {
+            case ADMINISTRADOR:
+                return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            case MODERADOR:
+                return List.of(new SimpleGrantedAuthority("ROLE_MODERATOR"));
+            case ESTUDIANTE:
+                return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
+            case INSTRUCTOR:
+                return List.of(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+            default:
+                throw new IllegalArgumentException("Perfil desconocido: " + this.perfil);
+        }
+
     }
 
     @Override

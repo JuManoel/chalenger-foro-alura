@@ -13,20 +13,20 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import edu.alura.chalenger_foro.models.perfil.Perfil;
+import edu.alura.chalenger_foro.models.usuario.Usuario;
 
 @Service
 public class ServiceToken {
     @Value("${api.security.secret}")
     private String apiSecret;
 
-    public String generarToken(Perfil perfil) {
+    public String generarToken(Usuario usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
                     .withIssuer("challenger-foro")
-                    .withSubject(perfil.getNombre())
-                    .withClaim("id", perfil.getUsuario().getId())//pues el usuario es el usuario principal. el perfil es como un avatar
+                    .withSubject(usuario.getEmail())
+                    .withClaim("id", usuario.getId())
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm);
         } catch (JWTCreationException exception){

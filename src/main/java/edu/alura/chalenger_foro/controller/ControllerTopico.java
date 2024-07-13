@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import edu.alura.chalenger_foro.models.topico.DatosActualizarTopico;
 import edu.alura.chalenger_foro.models.topico.DatosTopico;
 import edu.alura.chalenger_foro.service.ServiceTopico;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
@@ -39,8 +41,8 @@ public class ControllerTopico {
     public ResponseEntity<DatosDTOTopico> registrarTopico(@RequestBody @Valid DatosTopico datoTopico,
             UriComponentsBuilder uriComponentsBuilder) {
         var topico = service.registrarTopico(datoTopico);
-        URI url = uriComponentsBuilder.path("/topico/{id}").buildAndExpand(topico.id()).toUri();
-        return ResponseEntity.created(url).body(topico);
+        URI url = uriComponentsBuilder.path("/topico/{id}").buildAndExpand(topico.getId()).toUri();
+        return ResponseEntity.created(url).body(new DatosDTOTopico(topico));
     }
 
     @GetMapping("/{id}")
@@ -49,10 +51,18 @@ public class ControllerTopico {
         return ResponseEntity.ok(topico);
     }
 
-    @PutMapping()
+    @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<DatosDTOTopico> updateTopico(@PathVariable Long id, @RequestBody DatosActualizarTopico datosTopico){
         var topico = service.updateTopico(id,datosTopico);
-        return null;
+        return ResponseEntity.ok(topico);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> deletarTopico(@PathVariable Long id){
+        service.deletarTopico(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
