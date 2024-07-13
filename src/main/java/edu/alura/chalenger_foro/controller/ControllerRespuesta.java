@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.alura.chalenger_foro.DTO.DatosDTORespuesta;
+import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.respuesta.DatosActualizarRespuesta;
 import edu.alura.chalenger_foro.models.respuesta.DatosRespuesta;
 import edu.alura.chalenger_foro.service.ServiceRespuesta;
@@ -46,7 +47,7 @@ public class ControllerRespuesta {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosDTORespuesta> showRespuesta(@PathVariable Long id) {
+    public ResponseEntity<DatosDTORespuesta> showRespuesta(@PathVariable Long id) throws NoExiste {
         var Respuesta = service.getRespuestaById(id);
         return ResponseEntity.ok(Respuesta);
     }
@@ -54,14 +55,14 @@ public class ControllerRespuesta {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DatosDTORespuesta> updateRespuesta(@PathVariable Long id,
-            @RequestBody DatosActualizarRespuesta datosRespuesta) {
+            @RequestBody DatosActualizarRespuesta datosRespuesta) throws NoExiste {
         var Respuesta = service.updateRespuesta(id, datosRespuesta);
         return ResponseEntity.ok(Respuesta);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> deletarRespuesta(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarRespuesta(@PathVariable Long id) throws NoExiste {
         service.deletarRespuesta(id);
         return ResponseEntity.noContent().build();
     }

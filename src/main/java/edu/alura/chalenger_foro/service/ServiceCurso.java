@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import edu.alura.chalenger_foro.DTO.DatosDTOCurso;
+import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.curso.Curso;
 import edu.alura.chalenger_foro.models.curso.DatosActualizarCurso;
 import edu.alura.chalenger_foro.models.curso.DatosCurso;
@@ -28,26 +29,26 @@ public class ServiceCurso {
         return curso;
     }
 
-    public DatosDTOCurso getCursoById(Long id) {
+    public DatosDTOCurso getCursoById(Long id) throws NoExiste {
         var curso = existe(id);
         return new DatosDTOCurso(curso);
     }
 
-    public DatosDTOCurso updateCurso(Long id, DatosActualizarCurso datosCurso) {
+    public DatosDTOCurso updateCurso(Long id, DatosActualizarCurso datosCurso) throws NoExiste {
         var curso = existe(id);
         curso.ActualizarCurso(datosCurso);
         return new DatosDTOCurso(curso);
     }
 
-    public void deletarCurso(Long id) {
+    public void deletarCurso(Long id) throws NoExiste {
         var curso = existe(id);
         curso.desativar();
     }
 
-    private Curso existe(Long id){
+    private Curso existe(Long id) throws NoExiste{
         var curso = repository.findByActivoTrue(id);
         if(!curso.isPresent()){
-            throw new IllegalStateException("No existe el curso con id: "+id);
+            throw new NoExiste("No existe el curso con id: "+id);
         }
         return curso.get();
     }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import edu.alura.chalenger_foro.DTO.DatosDTOTopico;
+import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.topico.DatosActualizarTopico;
 import edu.alura.chalenger_foro.models.topico.DatosTopico;
 import edu.alura.chalenger_foro.models.topico.Topico;
@@ -29,26 +30,26 @@ public class ServiceTopico {
         return topico;
     }
 
-    public DatosDTOTopico getTopicoById(Long id) {
+    public DatosDTOTopico getTopicoById(Long id) throws NoExiste {
         var topico = existe(id);
         return new DatosDTOTopico(topico);
     }
 
-    public DatosDTOTopico updateTopico(Long id, DatosActualizarTopico datosTopico) {
+    public DatosDTOTopico updateTopico(Long id, DatosActualizarTopico datosTopico) throws NoExiste {
         var topico = existe(id);
         topico.actualizarTopico(datosTopico);
         return new DatosDTOTopico(topico);
     }
 
-    public void deletarTopico(Long id) {
+    public void deletarTopico(Long id) throws NoExiste {
        var topico = existe(id);
        topico.desativar();
     }
 
-    private Topico existe(Long id){
+    private Topico existe(Long id) throws NoExiste{
         var topico = repository.findByIdAndStatusTrue(id);
         if(!topico.isPresent())
-            throw new IllegalStateException("No existe esse topico");
+            throw new NoExiste("No existe esse topico");
         return topico.get();
     }
 }

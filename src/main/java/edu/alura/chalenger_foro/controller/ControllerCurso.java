@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.alura.chalenger_foro.DTO.DatosDTOCurso;
+import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.curso.DatosActualizarCurso;
 import edu.alura.chalenger_foro.models.curso.DatosCurso;
 import edu.alura.chalenger_foro.service.ServiceCurso;
@@ -45,7 +46,7 @@ public class ControllerCurso {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosDTOCurso> showCurso(@PathVariable Long id) {
+    public ResponseEntity<DatosDTOCurso> showCurso(@PathVariable Long id) throws NoExiste {
         var Curso = service.getCursoById(id);
         return ResponseEntity.ok(Curso);
     }
@@ -53,14 +54,14 @@ public class ControllerCurso {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DatosDTOCurso> updateCurso(@PathVariable Long id,
-            @RequestBody DatosActualizarCurso datosCurso) {
+            @RequestBody DatosActualizarCurso datosCurso) throws NoExiste {
         var Curso = service.updateCurso(id, datosCurso);
         return ResponseEntity.ok(Curso);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Void> deletarCurso(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarCurso(@PathVariable Long id) throws NoExiste {
         service.deletarCurso(id);
         return ResponseEntity.noContent().build();
     }

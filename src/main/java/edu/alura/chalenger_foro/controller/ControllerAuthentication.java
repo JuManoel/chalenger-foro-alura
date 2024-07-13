@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
+import edu.alura.chalenger_foro.infra.mis_execpciones.ProblemasGenerarToken;
 import edu.alura.chalenger_foro.models.DatosToken;
 import edu.alura.chalenger_foro.models.usuario.DatosUsuario;
 import edu.alura.chalenger_foro.models.usuario.Usuario;
@@ -26,7 +28,7 @@ public class ControllerAuthentication {
 
 
     @PostMapping
-    public ResponseEntity<DatosToken> autenticarUsuario(@RequestBody @Valid DatosUsuario usuario) {
+    public ResponseEntity<DatosToken> autenticarUsuario(@RequestBody @Valid DatosUsuario usuario) throws NoExiste, ProblemasGenerarToken {
         Authentication authToken = new UsernamePasswordAuthenticationToken(usuario.nombre(),
         usuario.contrasena());
         var usuarioAutenticado = manager.authenticate(authToken);

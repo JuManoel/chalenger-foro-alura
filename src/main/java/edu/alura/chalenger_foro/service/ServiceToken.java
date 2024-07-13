@@ -13,6 +13,9 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
+import edu.alura.chalenger_foro.infra.mis_execpciones.ProblemasGenerarToken;
+import edu.alura.chalenger_foro.infra.mis_execpciones.TokenInvalido;
 import edu.alura.chalenger_foro.models.usuario.Usuario;
 
 @Service
@@ -20,7 +23,7 @@ public class ServiceToken {
     @Value("${api.security.secret}")
     private String apiSecret;
 
-    public String generarToken(Usuario usuario) {
+    public String generarToken(Usuario usuario) throws NoExiste, ProblemasGenerarToken {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
@@ -30,13 +33,13 @@ public class ServiceToken {
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm);
         } catch (JWTCreationException exception){
-            throw new RuntimeException();
+            throw new ProblemasGenerarToken("Usuario no existe");
         }
     }
 
-    public String getSubject(String token) {
+    public String getSubject(String token) throws TokenInvalido {
         if (token == null) {
-            throw new RuntimeException();
+            throw new TokenInvalido("Es nulo");
         }
         DecodedJWT verifier = null;
         try {
@@ -50,7 +53,7 @@ public class ServiceToken {
             System.out.println(exception.toString());
         }
         if (verifier.getSubject() == null) {
-            throw new RuntimeException("Verifier invalido");
+            throw new TokenInvalido("Verifier invalido");
         }
         return verifier.getSubject();
     }
