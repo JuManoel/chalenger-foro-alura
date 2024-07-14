@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.alura.chalenger_foro.DTO.DatosDTOUsuario;
 import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
@@ -40,7 +39,7 @@ public class ControllerAuthentication {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<DatosDTOUsuario> registrarUsuario(@RequestBody @Valid DatosUsuario usuario,UriComponentsBuilder uriComponentsBuilder) throws NoExiste, ProblemasGenerarToken {
+    public ResponseEntity<DatosDTOUsuario> registrarUsuario(@RequestBody @Valid DatosUsuario usuario) throws NoExiste, ProblemasGenerarToken {
         var nuevoUsuario = service.registrarUsuario(usuario);
         return ResponseEntity.ok(nuevoUsuario);
     }

@@ -22,11 +22,13 @@ import edu.alura.chalenger_foro.models.curso.DatosActualizarCurso;
 import edu.alura.chalenger_foro.models.curso.DatosCurso;
 import edu.alura.chalenger_foro.service.ServiceCurso;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping(value = "/curso")
+@SecurityRequirement(name = "bearer-key")
 public class ControllerCurso {
     @Autowired
     private ServiceCurso service;

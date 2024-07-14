@@ -22,11 +22,13 @@ import edu.alura.chalenger_foro.models.respuesta.DatosActualizarRespuesta;
 import edu.alura.chalenger_foro.models.respuesta.DatosRespuesta;
 import edu.alura.chalenger_foro.service.ServiceRespuesta;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping(value = "/respuesta")
+@SecurityRequirement(name = "bearer-key")
 public class ControllerRespuesta {
     @Autowired
     private ServiceRespuesta service;

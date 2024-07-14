@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 public record DatosUsuario(
         @NotBlank @NotNull String nombre,
         @NotBlank @NotNull @Email String email,
-        @NotBlank @NotNull Perfil perfil,
+        @NotNull Perfil perfil,
         @NotBlank @NotNull @Size(min = 5) String contrasena) {
 
 }

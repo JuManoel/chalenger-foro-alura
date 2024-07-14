@@ -40,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                 if (email != null) {
                     // Token valido
                     var usuario = repository.cojerUsuarioPorEmail(email);
-                    if (usuario.isPresent())
+                    if (!usuario.isPresent())
                         throw new IllegalStateException("Usuario no existe");
                     var authentication = new UsernamePasswordAuthenticationToken(usuario.get(), null,
                             usuario.get().getAuthorities()); // Forzamos un inicio de sesion
