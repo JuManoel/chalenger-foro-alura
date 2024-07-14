@@ -39,11 +39,11 @@ public class Respuesta {
     private String solucion;
     private boolean activo;
 
-    public Respuesta(DatosRespuesta respuesta){
+    public Respuesta(DatosRespuesta respuesta,Topico topico,Usuario autor){
         this.mensaje = respuesta.mensaje();
-        this.topico = new Topico(respuesta.topico());
+        this.topico = topico;
         this.fecha = respuesta.fecha();
-        this.autor = new Usuario(respuesta.autor());
+        this.autor = autor;
         this.solucion = respuesta.solucion();
         this.activo = true;
     }

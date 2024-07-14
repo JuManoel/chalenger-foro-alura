@@ -48,17 +48,27 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Respuesta> respuestas;
 
-    public Topico(DatosTopico topico){
+    public Topico(DatosTopico topico,Usuario user,Curso curso){
         this.titulo = topico.titulo();
         this.mensaje = topico.mensaje();
         this.fecha = topico.fecha();
-        this.autor = new Usuario(topico.autor());
-        this.curso = new Curso(topico.curso());
-        if(topico.respuestas() == null)
-            this.respuestas = new ArrayList<>();//considero caso de no tener ningua respuesta
-        else
-            this.respuestas = topico.respuestas().stream().map(r -> new Respuesta(r)).toList();
+        this.autor = user;
+        this.curso = curso;
         this.status = true;
+        this.respuestas = new ArrayList<>();
+    }
+
+    public Topico(DatosTopico topico,Usuario user,Curso curso,ArrayList<Respuesta> resp){
+        this.titulo = topico.titulo();
+        this.mensaje = topico.mensaje();
+        this.fecha = topico.fecha();
+        this.autor = user;
+        this.curso = curso;
+        this.status = true;
+        this.respuestas = resp;
+        for (Respuesta respuesta : this.respuestas) {
+            respuesta.setTopico(this);
+        }
     }
 
     public void actualizarTopico(DatosActualizarTopico topico){

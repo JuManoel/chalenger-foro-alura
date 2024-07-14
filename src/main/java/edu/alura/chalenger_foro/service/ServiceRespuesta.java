@@ -11,20 +11,34 @@ import edu.alura.chalenger_foro.models.respuesta.DatosActualizarRespuesta;
 import edu.alura.chalenger_foro.models.respuesta.DatosRespuesta;
 import edu.alura.chalenger_foro.models.respuesta.Respuesta;
 import edu.alura.chalenger_foro.repository.RespuestaRepository;
+import edu.alura.chalenger_foro.repository.TopicoRepository;
+import edu.alura.chalenger_foro.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 
 @Service
 public class ServiceRespuesta {
     @Autowired
     private RespuestaRepository repository;
+    @Autowired
+    private UsuarioRepository userR;
+    @Autowired
+    private TopicoRepository topicR;
 
     public Page<DatosDTORespuesta> getAllRespuestas(Pageable page) {
         var respuesta = repository.findByActivoTrue(page);
         return respuesta.map(r -> new DatosDTORespuesta(r));
     }
 
-    public Respuesta registrarRespuesta(@Valid DatosRespuesta datoRespuesta) {
-        var resp = new Respuesta(datoRespuesta);
+    public Respuesta registrarRespuesta(@Valid DatosRespuesta datoRespuesta) throws NoExiste {
+        var user = userR.findByIdAndActivoTrue(datoRespuesta.autor());
+        if(!user.isPresent()){
+            throw new NoExiste("Usuario no existe");
+        }
+        var topico = topicR.findByIdAndStatusTrue(datoRespuesta.topico());
+        if(!topico.isPresent()){
+            throw new NoExiste("Ese topico no existe");
+        }
+        var resp = new Respuesta(datoRespuesta,topico.get(),user.get());
         repository.save(resp);
         return resp;
     }

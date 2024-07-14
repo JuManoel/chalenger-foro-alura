@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.alura.chalenger_foro.DTO.DatosDTOCurso;
@@ -21,7 +22,6 @@ import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.curso.DatosActualizarCurso;
 import edu.alura.chalenger_foro.models.curso.DatosCurso;
 import edu.alura.chalenger_foro.service.ServiceCurso;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

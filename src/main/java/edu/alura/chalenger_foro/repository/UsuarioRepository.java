@@ -16,5 +16,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             WHERE u.email = :email
             """)
     Optional<Usuario> cojerUsuarioPorEmail(String email);
-    
+    Optional<Usuario> findByIdAndActivoTrue(long id);
 }

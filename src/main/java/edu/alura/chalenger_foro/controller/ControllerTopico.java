@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.alura.chalenger_foro.DTO.DatosDTOTopico;
@@ -21,7 +22,6 @@ import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.topico.DatosActualizarTopico;
 import edu.alura.chalenger_foro.models.topico.DatosTopico;
 import edu.alura.chalenger_foro.service.ServiceTopico;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -42,7 +42,7 @@ public class ControllerTopico {
 
     @PostMapping()
     public ResponseEntity<DatosDTOTopico> registrarTopico(@RequestBody @Valid DatosTopico datoTopico,
-            UriComponentsBuilder uriComponentsBuilder) {
+            UriComponentsBuilder uriComponentsBuilder) throws NoExiste {
         var topico = service.registrarTopico(datoTopico);
         URI url = uriComponentsBuilder.path("/topico/{id}").buildAndExpand(topico.getId()).toUri();
         return ResponseEntity.created(url).body(new DatosDTOTopico(topico));

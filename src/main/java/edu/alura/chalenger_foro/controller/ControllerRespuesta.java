@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.util.UriComponentsBuilder;
 
 import edu.alura.chalenger_foro.DTO.DatosDTORespuesta;
@@ -21,7 +23,6 @@ import edu.alura.chalenger_foro.infra.mis_execpciones.NoExiste;
 import edu.alura.chalenger_foro.models.respuesta.DatosActualizarRespuesta;
 import edu.alura.chalenger_foro.models.respuesta.DatosRespuesta;
 import edu.alura.chalenger_foro.service.ServiceRespuesta;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -35,14 +36,14 @@ public class ControllerRespuesta {
 
     @GetMapping()
     public ResponseEntity<Page<DatosDTORespuesta>> showAllRespuestas(
-            @PageableDefault(size = 3, sort = "titulo") Pageable page) {
+            @PageableDefault(size = 3, sort = "fecha") Pageable page) {
         var Respuestas = service.getAllRespuestas(page);
         return ResponseEntity.ok(Respuestas);
     }
 
     @PostMapping()
     public ResponseEntity<DatosDTORespuesta> registrarRespuesta(@RequestBody @Valid DatosRespuesta datoRespuesta,
-            UriComponentsBuilder uriComponentsBuilder) {
+            UriComponentsBuilder uriComponentsBuilder) throws NoExiste {
         var respuesta = service.registrarRespuesta(datoRespuesta);
         URI url = uriComponentsBuilder.path("/respuesta/{id}").buildAndExpand(respuesta.getId()).toUri();
         return ResponseEntity.created(url).body(new DatosDTORespuesta(respuesta));
