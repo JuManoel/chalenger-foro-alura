@@ -41,7 +41,7 @@ public class ControllerCurso {
     public ResponseEntity<DatosDTOCurso> registrarCurso(@RequestBody @Valid DatosCurso datoCurso,
             UriComponentsBuilder uriComponentsBuilder) {
         var Curso = service.registrarCurso(datoCurso);
-        URI url = uriComponentsBuilder.path("/Curso/{id}").buildAndExpand(Curso.getId()).toUri();
+        URI url = uriComponentsBuilder.path("/curso/{id}").buildAndExpand(Curso.getId()).toUri();
         return ResponseEntity.created(url).body(new DatosDTOCurso(Curso));
     }
 

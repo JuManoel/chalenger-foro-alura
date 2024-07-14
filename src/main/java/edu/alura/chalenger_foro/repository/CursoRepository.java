@@ -12,6 +12,6 @@ public interface CursoRepository extends JpaRepository<Curso,Long>{
 
     Page<Curso> findByActivoTrue(Pageable page);
 
-    Optional<Curso> findByActivoTrue(Long id);
+    Optional<Curso> findByIdAndActivoTrue(Long id);
 
 }

@@ -11,5 +11,5 @@ import edu.alura.chalenger_foro.models.respuesta.Respuesta;
 public interface RespuestaRepository extends JpaRepository<Respuesta, Long> {
 
     Page<Respuesta> findByActivoTrue(Pageable page);
-    Optional<Respuesta> findByIdActivoTrue(long id);
+    Optional<Respuesta> findByIdAndActivoTrue(long id);
 }

@@ -46,7 +46,7 @@ public class ServiceRespuesta {
     }
 
     private Respuesta existe(Long id) throws NoExiste{
-        var resp = repository.findByIdActivoTrue(id);
+        var resp = repository.findByIdAndActivoTrue(id);
         if(!resp.isPresent()){
             throw new NoExiste("No existe esa respuesta");
         }

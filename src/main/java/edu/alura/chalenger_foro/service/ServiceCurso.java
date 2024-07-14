@@ -46,7 +46,7 @@ public class ServiceCurso {
     }
 
     private Curso existe(Long id) throws NoExiste{
-        var curso = repository.findByActivoTrue(id);
+        var curso = repository.findByIdAndActivoTrue(id);
         if(!curso.isPresent()){
             throw new NoExiste("No existe el curso con id: "+id);
         }
