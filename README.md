@@ -10,7 +10,6 @@
 <h2>What was the most difficult part?</h2>
 <p>For me was understand about the class model</p>
 <img src="https://github.com/user-attachments/assets/8498e86e-9f64-426c-8305-8b656f4c62e4" alt="Class model">
-![image](https://github.com/user-attachments/assets/8498e86e-9f64-426c-8305-8b656f4c62e4)
 <p>As you can see, perfil looks like useless. But thanks to may classmates, they make me to see that perfil is like roles, like admin, user and etc...</p>
 <h2>My best part for me</h2>
 <p>In this project I have the idea to develop all that I need and after that start to find bugs. I spend 2 days only coding and other day to finding and fixing bug. I felt this made me code faster, and allows me to be able to upload it before the deadline</p>
